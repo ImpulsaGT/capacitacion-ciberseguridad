@@ -726,7 +726,7 @@
   <section id="screen-register">
     <div class="register-wrap">
       <h1>Antes de comenzar</h1>
-      <p class="reg-sub">Completa tus datos para identificar tu progreso. Tu reporte final se compartirá con el equipo de TI de Impulsa Desarrollos para dar seguimiento a la capacitación.</p>
+      <p class="reg-sub">Completa tus datos para identificar tu progreso. Tu reporte final se compartirá con el equipo de TI de Impulsa Desarrollos para dar seguimiento a esta iniciativa de concientización en ciberseguridad.</p>
 
       <div class="reg-field">
         <label for="reg-name">Nombre completo</label>
@@ -746,7 +746,7 @@
         <div class="reg-error" id="reg-dept-error">Escribe tu departamento.</div>
       </div>
 
-      <p class="reg-privacy">🔒 Tus datos y resultados se usan únicamente para dar seguimiento interno a esta capacitación de ciberseguridad.</p>
+      <p class="reg-privacy">🔒 Tus datos y resultados se usan únicamente para dar seguimiento interno a esta iniciativa de concientización en ciberseguridad.</p>
 
       <button id="btn-register-continue">Continuar →</button>
     </div>
@@ -1841,7 +1841,7 @@
       body: JSON.stringify(payload)
     }).then(res => {
       if (res.ok) {
-        showSendStatus("ok", "✅ Tu reporte se envió correctamente. ¡Gracias por completar la capacitación!");
+        showSendStatus("ok", "✅ Tu reporte se envió correctamente. ¡Gracias por completar este ejercicio de concientización!");
       } else {
         throw new Error("send failed");
       }
