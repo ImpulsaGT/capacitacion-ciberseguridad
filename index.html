@@ -1609,13 +1609,21 @@
   function openModule(key) {
     activeModuleKey = key;
     activeIndex = 0;
-    document.getElementById("module-active-body").style.display = "block";
-    document.getElementById("module-complete-body").style.display = "none";
     const m = MODULES.find(x => x.key === key);
     document.getElementById("mod-icon").textContent = m.icon;
     document.getElementById("mod-title").textContent = m.title;
     document.getElementById("mod-sub").textContent = m.blurb;
     showScreen("module");
+
+    // Un módulo ya completado no se puede volver a contestar: se muestra
+    // el resultado ya registrado en lugar de dejar reintentar las preguntas.
+    if (progress[key].done) {
+      showModuleComplete(key, { alreadyDone: true });
+      return;
+    }
+
+    document.getElementById("module-active-body").style.display = "block";
+    document.getElementById("module-complete-body").style.display = "none";
     renderModuleQuestion();
   }
 
@@ -1717,17 +1725,25 @@
     }
   });
 
-  function finishModule() {
-    progress[activeModuleKey].done = true;
+  function scoreLabel(score) {
+    if (score >= 80) return "¡Excelente dominio del tema!";
+    if (score >= 50) return "Buen intento, repasa los puntos clave.";
+    return "Vale la pena repasar este módulo con calma.";
+  }
+
+  function showModuleComplete(key, opts) {
+    opts = opts || {};
     document.getElementById("module-active-body").style.display = "none";
     document.getElementById("module-complete-body").style.display = "block";
-    const score = moduleScore(activeModuleKey);
+    const score = moduleScore(key);
     document.getElementById("mc-score").textContent = score + "%";
-    let label;
-    if (score >= 80) label = "¡Excelente dominio del tema!";
-    else if (score >= 50) label = "Buen intento, repasa los puntos clave.";
-    else label = "Vale la pena repasar este módulo con calma.";
-    document.getElementById("mc-label").textContent = label;
+    document.getElementById("mc-label").textContent = scoreLabel(score) +
+      (opts.alreadyDone ? " Este módulo ya quedó registrado y no puede repetirse." : "");
+  }
+
+  function finishModule() {
+    progress[activeModuleKey].done = true;
+    showModuleComplete(activeModuleKey);
     updateTopbar();
   }
 
