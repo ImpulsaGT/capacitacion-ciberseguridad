@@ -742,20 +742,8 @@
 
       <div class="reg-field">
         <label for="reg-dept">Departamento</label>
-        <select id="reg-dept">
-          <option value="" selected disabled>Selecciona tu departamento</option>
-          <option>Dirección General</option>
-          <option>Proyectos / Project Management</option>
-          <option>Construcción / Operaciones</option>
-          <option>Finanzas</option>
-          <option>Administración</option>
-          <option>Legal</option>
-          <option>Ventas y Marketing</option>
-          <option>Recursos Humanos</option>
-          <option>TI</option>
-          <option>Otro</option>
-        </select>
-        <div class="reg-error" id="reg-dept-error">Selecciona tu departamento.</div>
+        <input type="text" id="reg-dept" placeholder="Ej. Ventas y Marketing" autocomplete="organization-title" />
+        <div class="reg-error" id="reg-dept-error">Escribe tu departamento.</div>
       </div>
 
       <p class="reg-privacy">🔒 Tus datos y resultados se usan únicamente para dar seguimiento interno a esta capacitación de ciberseguridad.</p>
@@ -1569,10 +1557,10 @@
   function validateRegister() {
     const name = document.getElementById("reg-name").value.trim();
     const email = document.getElementById("reg-email").value.trim();
-    const dept = document.getElementById("reg-dept").value;
+    const dept = document.getElementById("reg-dept").value.trim();
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const nameOk = name.length >= 3;
-    const deptOk = !!dept;
+    const deptOk = dept.length >= 2;
 
     document.getElementById("reg-name-error").style.display = nameOk ? "none" : "block";
     document.getElementById("reg-email-error").style.display = emailOk ? "none" : "block";
