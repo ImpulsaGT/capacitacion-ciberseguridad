@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Impulsa Desarrollos | Centro de Concientización en Ciberseguridad</title>
+<style>
+  :root {
+    --bg-1: #eef4f2;
+    --bg-2: #e3ede9;
+    --panel: #ffffff;
+    --line: #dfe7e4;
+    --accent: #c9933f;
+    --accent-2: #a8752c;
+    --teal: #1f505f;
+    --teal-soft: rgba(31,80,95,0.08);
+    --gold-soft: rgba(201,147,63,0.12);
+    --good: #15803d;
+    --bad: #b91c1c;
+    --text: #16262b;
+    --text-dim: #5b6b70;
+    --mock-bg: #0b1f26;
+    --mock-bg-2: #0a1b21;
+    --mock-text: #eef3f0;
+    --mock-text-dim: #9fb7bd;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, var(--bg-1), var(--bg-2));
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  /* ===== Topbar ===== */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 28px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--teal-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+  }
+  .brand-badge img { width: 100%; height: 100%; object-fit: contain; }
+  .brand-text .k1 { font-size: 13px; font-weight: 700; color: var(--teal); letter-spacing: 0.02em; }
+  .brand-text .k2 { font-size: 12px; color: var(--text-dim); }
+
+  .topbar-status { display: flex; align-items: center; gap: 14px; }
+  #topbar-count { font-size: 12px; color: var(--text-dim); font-weight: 600; white-space: nowrap; }
+  .rail { display: flex; gap: 4px; }
+  .rail .seg {
+    width: 14px; height: 8px; border-radius: 2px;
+    background: var(--line);
+  }
+  .rail .seg.started { background: var(--accent); opacity: 0.5; }
+  .rail .seg.done { background: var(--good); opacity: 1; }
+
+  /* ===== Layout ===== */
+  .content {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+  }
+
+  .page-title { font-size: 26px; font-weight: 800; margin: 0 0 6px; color: var(--teal); }
+  .lede { color: var(--text-dim); font-size: 14.5px; line-height: 1.6; margin: 0 0 26px; max-width: 640px; }
+  .section-label {
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--accent-2); margin: 0 0 12px;
+  }
+
+  /* ===== Hero banner ===== */
+  .hero-banner {
+    background: linear-gradient(120deg, #123039 0%, #1f505f 55%, #2a6376 100%);
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin: 0 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+  }
+  .hero-left { display: flex; flex-direction: column; gap: 10px; }
+  .hero-logo {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+  }
+  .hero-logo img { height: 30px; }
+  .hero-art { width: 190px; height: 150px; flex-shrink: 0; }
+
+  @media (max-width: 560px) {
+    .hero-banner { flex-direction: column; align-items: flex-start; }
+    .hero-banner .hero-art { display: none; }
+  }
+
+  /* ===== Module grid ===== */
+  #module-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 640px) { #module-grid { grid-template-columns: 1fr; } }
+
+  .module-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: border-color 0.15s, transform 0.1s;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .module-card:hover { transform: translateY(-2px); border-left-color: var(--accent); }
+  .module-card.started { border-left-color: var(--accent); }
+  .module-card.done { border-left-color: var(--good); }
+  .mc-icon { font-size: 22px; line-height: 1; margin-top: 2px; }
+  .mc-num { font-size: 11px; font-weight: 700; color: var(--text-dim); letter-spacing: 0.06em; }
+  .mc-title { font-size: 15px; font-weight: 700; margin: 2px 0 4px; }
+  .mc-blurb { font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
+  .mc-status { font-size: 11px; font-weight: 700; margin-top: 6px; }
+  .mc-status.done { color: var(--good); }
+  .mc-status.started { color: var(--accent-2); }
+  .mc-status.pending { color: var(--text-dim); }
+
+  .report-tile, .game-tile {
+    grid-column: 1 / -1;
+    border-radius: 10px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+  }
+  .report-tile.locked, .game-tile.locked {
+    background: var(--bg-2);
+    color: var(--text-dim);
+    cursor: default;
+  }
+  .report-tile.unlocked {
+    background: var(--teal);
+    color: #ffffff;
+    border-color: var(--teal);
+  }
+  .report-tile.game-tile.unlocked {
+    background: var(--accent);
+    color: #201200;
+    border-color: var(--accent);
+  }
+  .rt-title { font-size: 15px; font-weight: 700; }
+  .rt-sub { font-size: 12.5px; opacity: 0.85; margin-top: 2px; }
+  .rt-arrow { font-size: 20px; }
+
+  /* ===== Module screen ===== */
+  #screen-module, #screen-report, #screen-game, #screen-intro { display: none; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--teal);
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    padding: 6px 0;
+    margin-bottom: 18px;
+  }
+  .back-btn:hover { text-decoration: underline; }
+
+  .mod-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+  #mod-icon { font-size: 26px; }
+  #mod-title { font-size: 21px; font-weight: 800; color: var(--teal); }
+  #mod-sub { font-size: 13px; color: var(--text-dim); margin: 0 0 18px; }
+
+  #dots-row { display: flex; gap: 6px; margin-bottom: 22px; }
+  #dots-row .dot {
+    width: 26px; height: 6px; border-radius: 3px; background: var(--line);
+  }
+  #dots-row .dot.current { background: var(--accent); }
+  #dots-row .dot.correct { background: var(--good); }
+  #dots-row .dot.wrong { background: var(--bad); }
+
+  .qa-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px;
+  }
+
+  #question-text { font-size: 17px; font-weight: 700; margin: 0 0 18px; line-height: 1.4; }
+
+  #options-container { display: flex; flex-direction: column; gap: 10px; }
+  .option-btn {
+    text-align: left;
+    padding: 13px 16px;
+    border-radius: 10px;
+    border: 1.5px solid var(--line);
+    background: var(--bg-1);
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--text);
+    line-height: 1.4;
+    transition: border-color 0.12s, background 0.12s;
+  }
+  .option-btn:hover:not([disabled]) { border-color: var(--teal); background: var(--teal-soft); }
+  .option-btn.selected-correct { border-color: var(--good); background: rgba(21,128,61,0.1); }
+  .option-btn.selected-wrong { border-color: var(--bad); background: rgba(185,28,28,0.08); }
+  .option-btn.reveal-correct { border-color: var(--good); }
+  .option-btn[disabled] { cursor: default; opacity: 0.9; }
+
+  #feedback-box {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    display: none;
+  }
+  #feedback-box.ok { background: rgba(21,128,61,0.08); border: 1px solid rgba(21,128,61,0.3); color: #0f4023; }
+  #feedback-box.bad { background: rgba(185,28,28,0.06); border: 1px solid rgba(185,28,28,0.25); color: #6b1414; }
+
+  .qa-footer { display: flex; justify-content: flex-end; margin-top: 20px; }
+  #btn-next {
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    display: none;
+  }
+  #btn-next:hover { background: #163e49; }
+
+  /* device mock screens - always dark regardless of theme */
+  .email-mock, .chat-mock {
+    background: var(--mock-bg);
+    color: var(--mock-text);
+    border-radius: 12px;
+    padding: 0;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border: 1px solid #0e2831;
+  }
+  .email-mock .em-head {
+    background: var(--mock-bg-2);
+    padding: 12px 16px;
+    font-size: 11.5px;
+    color: var(--mock-text-dim);
+    border-bottom: 1px solid #12303a;
+  }
+  .email-mock .em-head b { color: var(--mock-text); }
+  .email-mock .em-row { margin-bottom: 3px; }
+  .email-mock .em-body { padding: 16px; font-size: 13.5px; line-height: 1.6; }
+  .email-mock .em-link { color: #6fb8d1; text-decoration: underline; }
+
+  .chat-mock .cm-label {
+    background: var(--mock-bg-2);
+    padding: 10px 16px;
+    font-size: 11.5px;
+    color: var(--mock-text-dim);
+    border-bottom: 1px solid #12303a;
+  }
+  .chat-mock .cm-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .chat-bubble {
+    max-width: 78%;
+    padding: 9px 13px;
+    border-radius: 12px;
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+  .chat-bubble.them { background: #142f38; align-self: flex-start; border-bottom-left-radius: 3px; }
+  .chat-bubble.me { background: var(--accent); color: #201200; align-self: flex-end; border-bottom-right-radius: 3px; font-weight: 600; }
+
+  /* module complete */
+  #module-complete-body { text-align: center; padding: 30px 0; }
+  #module-complete-body .mc-emoji { font-size: 44px; margin-bottom: 10px; }
+  #mc-score { font-size: 30px; font-weight: 800; color: var(--teal); }
+  #mc-label { font-size: 14px; color: var(--text-dim); margin: 6px 0 22px; }
+
+  /* ===== Report ===== */
+  .report-stat { text-align: center; padding: 10px 0 24px; }
+  #report-pct { font-size: 52px; font-weight: 800; color: var(--teal); }
+  #report-tag { font-size: 15px; font-weight: 700; color: var(--accent-2); margin-top: 4px; }
+  #report-desc { text-align: center; color: var(--text-dim); font-size: 13.5px; max-width: 480px; margin: 0 auto 30px; line-height: 1.6; }
+
+  .mod-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .mod-row:last-child { border-bottom: none; }
+  .mod-row .mr-icon { font-size: 17px; width: 22px; }
+  .mod-row .mr-name { font-size: 13.5px; font-weight: 600; width: 200px; flex-shrink: 0; }
+  .mod-row .mr-bar-track { flex: 1; height: 8px; background: var(--bg-2); border-radius: 4px; overflow: hidden; }
+  .mod-row .mr-bar-fill { height: 100%; background: var(--good); border-radius: 4px; }
+  .mod-row .mr-pct { font-size: 12.5px; font-weight: 700; color: var(--text-dim); width: 40px; text-align: right; }
+
+  .results-actions { display: flex; gap: 12px; margin-top: 26px; flex-wrap: wrap; }
+  .btn-secondary, .btn-primary {
+    padding: 11px 20px; border-radius: 8px; font-weight: 700; font-size: 13.5px; cursor: pointer; border: none;
+  }
+  .btn-secondary { background: var(--bg-2); color: var(--text); border: 1px solid var(--line); }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-secondary:hover { background: var(--line); }
+  .btn-primary:hover { background: #163e49; }
+
+  #review-list { margin-top: 18px; display: none; flex-direction: column; gap: 14px; }
+  .review-item { border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .review-item .ri-mod { font-size: 11px; font-weight: 700; color: var(--accent-2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .review-item .ri-q { font-size: 13.5px; font-weight: 700; margin-bottom: 6px; }
+  .review-item .ri-a { font-size: 13px; margin-bottom: 3px; }
+  .review-item .ri-a.correct { color: var(--good); }
+  .review-item .ri-a.wrong { color: var(--bad); }
+  .review-item .ri-exp { font-size: 12.5px; color: var(--text-dim); margin-top: 6px; line-height: 1.5; }
+
+  /* ===== Game ===== */
+  .game-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
+  .game-score { font-size: 14px; font-weight: 700; color: var(--teal); }
+  .game-timer-track { flex: 1; min-width: 120px; height: 10px; background: var(--bg-2); border-radius: 5px; overflow: hidden; }
+  .game-timer-fill { height: 100%; background: var(--good); border-radius: 5px; transition: width 1s linear, background 0.3s; }
+  .game-timer-fill.low { background: var(--bad); }
+  #game-time-num { font-size: 13px; font-weight: 700; color: var(--text-dim); width: 40px; text-align: right; }
+
+  .game-card {
+    background: var(--panel); border: 2px solid var(--line); border-radius: 14px;
+    padding: 40px 26px; text-align: center; font-size: 18px; font-weight: 700; line-height: 1.5;
+    margin-bottom: 20px; transition: border-color 0.15s, background 0.15s;
+    min-height: 100px; display: flex; align-items: center; justify-content: center;
+  }
+  .game-card.flash-correct { border-color: var(--good); background: rgba(21,128,61,0.08); }
+  .game-card.flash-wrong { border-color: var(--bad); background: rgba(185,28,28,0.08); }
+
+  .game-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 520px) { .game-choices { grid-template-columns: 1fr; } }
+  .game-choice-btn {
+    padding: 16px; border-radius: 10px; font-weight: 700; font-size: 14.5px; cursor: pointer;
+    border: 2px solid var(--line); background: var(--panel);
+  }
+  .game-choice-btn.risk { border-color: rgba(185,28,28,0.4); color: var(--bad); }
+  .game-choice-btn.risk:hover { background: rgba(185,28,28,0.06); }
+  .game-choice-btn.safe { border-color: rgba(21,128,61,0.4); color: var(--good); }
+  .game-choice-btn.safe:hover { background: rgba(21,128,61,0.06); }
+
+  .game-end { text-align: center; padding: 20px 0; }
+  .ge-score { font-size: 46px; font-weight: 800; color: var(--teal); }
+  .ge-rank { font-size: 16px; font-weight: 700; color: var(--accent-2); margin: 6px 0 14px; }
+  .ge-desc { font-size: 13.5px; color: var(--text-dim); max-width: 440px; margin: 0 auto 22px; line-height: 1.6; }
+
+  /* ===== Intro animada ===== */
+  #screen-intro.active { display: block; }
+  .intro-wrap {
+    max-width: 900px;
+    margin: 30px auto 0;
+    background: linear-gradient(150deg, #0d262e 0%, #163c47 45%, #1f505f 75%, #2a6376 100%);
+    border-radius: 20px;
+    padding: 48px 40px 40px;
+    color: #eef6f4;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+  .intro-logo-wrap {
+    display: inline-flex;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 26px;
+    opacity: 0;
+    animation: introFadeUp 0.7s ease-out 0.1s forwards;
+  }
+  .intro-logo-wrap img { height: 32px; }
+
+  .intro-stage { position: relative; width: 220px; height: 220px; margin: 0 auto 22px; }
+  .intro-stage svg { width: 100%; height: 100%; }
+
+  .intro-ring {
+    fill: none;
+    stroke: rgba(201,147,63,0.35);
+    stroke-width: 2;
+    animation: introPulse 2.6s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .intro-ring.r2 { animation-delay: 0.6s; stroke: rgba(255,255,255,0.18); }
+
+  .intro-circuit {
+    fill: none;
+    stroke: rgba(255,255,255,0.4);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+    animation: introDraw 1.6s ease-out forwards;
+  }
+  .intro-circuit.c2 { animation-delay: 0.25s; }
+  .intro-circuit.c3 { animation-delay: 0.5s; }
+  .intro-circuit.c4 { animation-delay: 0.75s; }
+
+  .intro-node {
+    fill: #c9933f;
+    opacity: 0;
+    animation: introNode 0.5s ease-out forwards;
+  }
+  .intro-node.n2 { animation-delay: 1.0s; }
+  .intro-node.n3 { animation-delay: 1.2s; }
+  .intro-node.n4 { animation-delay: 1.4s; }
+  .intro-node.n1 { animation-delay: 0.8s; }
+
+  .intro-shield {
+    opacity: 0;
+    animation: introShield 0.9s cubic-bezier(.2,.9,.3,1.2) 0.9s forwards;
+    transform-origin: 110px 118px;
+  }
+
+  .intro-lock-body { fill: #123039; }
+  .intro-lock-shackle { fill: none; stroke: #123039; stroke-width: 6; stroke-linecap: round; }
+  .intro-keyhole { fill: #e9c184; }
+
+  .intro-packet {
+    fill: #ffe9c2;
+    opacity: 0;
+  }
+  .intro-packet.p1 { animation: introPacket1 3.2s ease-in-out 1.8s infinite; }
+  .intro-packet.p2 { animation: introPacket2 3.4s ease-in-out 2.3s infinite; }
+  .intro-packet.p3 { animation: introPacket3 3s ease-in-out 2.6s infinite; }
+
+  @keyframes introFadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes introPulse {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.75; transform: scale(1.05); }
+  }
+  @keyframes introDraw {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes introNode {
+    to { opacity: 1; }
+  }
+  @keyframes introShield {
+    to { opacity: 1; transform: scale(1); }
+    from { transform: scale(0.7); }
+  }
+  @keyframes introPacket1 {
+    0% { opacity: 0; offset-distance: 0%; }
+    8% { opacity: 1; }
+    45% { opacity: 1; }
+    55% { opacity: 0; }
+    100% { opacity: 0; offset-distance: 100%; }
+  }
+  @keyframes introPacket2 {
+    0% { opacity: 0; offset-distance: 0%; }
+    8% { opacity: 1; }
+    45% { opacity: 1; }
+    55% { opacity: 0; }
+    100% { opacity: 0; offset-distance: 100%; }
+  }
+  @keyframes introPacket3 {
+    0% { opacity: 0; offset-distance: 0%; }
+    8% { opacity: 1; }
+    45% { opacity: 1; }
+    55% { opacity: 0; }
+    100% { opacity: 0; offset-distance: 100%; }
+  }
+  .intro-packet.p1 { offset-path: path('M40,60 C70,90 70,90 100,118'); }
+  .intro-packet.p2 { offset-path: path('M180,60 C150,90 150,90 120,118'); }
+  .intro-packet.p3 { offset-path: path('M110,200 C110,170 110,170 110,140'); }
+
+  .intro-h1 {
+    font-size: 25px;
+    font-weight: 800;
+    margin: 4px 0 10px;
+    opacity: 0;
+    animation: introFadeUp 0.7s ease-out 1.6s forwards;
+  }
+  .intro-sub {
+    font-size: 14.5px;
+    color: #cfe4e0;
+    max-width: 520px;
+    margin: 0 auto 26px;
+    line-height: 1.6;
+    opacity: 0;
+    animation: introFadeUp 0.7s ease-out 1.85s forwards;
+  }
+
+  .intro-chips {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .intro-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.09);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: introChip 0.5s ease-out forwards;
+  }
+  .intro-chip:nth-child(1) { animation-delay: 2.05s; }
+  .intro-chip:nth-child(2) { animation-delay: 2.15s; }
+  .intro-chip:nth-child(3) { animation-delay: 2.25s; }
+  .intro-chip:nth-child(4) { animation-delay: 2.35s; }
+  .intro-chip:nth-child(5) { animation-delay: 2.45s; }
+  @keyframes introChip {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .intro-meta {
+    font-size: 12px;
+    color: #a9c9c3;
+    margin-bottom: 22px;
+    opacity: 0;
+    animation: introFadeUp 0.7s ease-out 2.55s forwards;
+  }
+
+  #btn-intro-start {
+    background: var(--accent);
+    color: #201200;
+    border: none;
+    padding: 13px 30px;
+    border-radius: 9px;
+    font-weight: 800;
+    font-size: 14.5px;
+    cursor: pointer;
+    opacity: 0;
+    animation: introFadeUp 0.7s ease-out 2.7s forwards;
+  }
+  #btn-intro-start:hover { background: #d9a251; }
+
+  /* ===== Registro ===== */
+  #screen-register { display: none; }
+  .register-wrap {
+    max-width: 520px;
+    margin: 40px auto 0;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 36px 34px;
+  }
+  .register-wrap h1 { font-size: 21px; font-weight: 800; color: var(--teal); margin: 0 0 8px; }
+  .register-wrap .reg-sub { font-size: 13.5px; color: var(--text-dim); line-height: 1.6; margin: 0 0 26px; }
+  .reg-field { margin-bottom: 16px; }
+  .reg-field label { display: block; font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .reg-field input, .reg-field select {
+    width: 100%;
+    padding: 11px 13px;
+    border-radius: 8px;
+    border: 1.5px solid var(--line);
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text);
+    background: var(--bg-1);
+  }
+  .reg-field input:focus, .reg-field select:focus { outline: none; border-color: var(--teal); }
+  .reg-error { font-size: 12px; color: var(--bad); margin-top: 5px; display: none; }
+  .reg-privacy {
+    font-size: 11.5px;
+    color: var(--text-dim);
+    line-height: 1.5;
+    margin: 4px 0 22px;
+    padding: 10px 12px;
+    background: var(--teal-soft);
+    border-radius: 8px;
+  }
+  #btn-register-continue {
+    width: 100%;
+    background: var(--teal);
+    color: #fff;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 14.5px;
+    cursor: pointer;
+  }
+  #btn-register-continue:hover { background: #163e49; }
+  #btn-register-continue:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .topbar-user { font-size: 11.5px; color: var(--text-dim); }
+
+  /* ===== Envío de reporte ===== */
+  .report-send-status {
+    margin-top: 18px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    display: none;
+  }
+  .report-send-status.sending { display: block; background: var(--bg-2); color: var(--text-dim); }
+  .report-send-status.ok { display: block; background: rgba(21,128,61,0.08); border: 1px solid rgba(21,128,61,0.3); color: #0f4023; }
+  .report-send-status.fail { display: block; background: rgba(185,28,28,0.06); border: 1px solid rgba(185,28,28,0.25); color: #6b1414; }
+  .report-send-status .btn-secondary { margin-top: 8px; }
+
+  /* ===== Footer ===== */
+  .credits {
+    text-align: center;
+    font-size: 11.5px;
+    color: var(--text-dim);
+    padding: 24px 0 40px;
+  }
+
+  #screen-report, #screen-game { display: none; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-badge"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAY4AAAC2CAYAAADOWmoIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE9GlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4xLWMwMDIgNzkuYTFjZDEyZjQxLCAyMDI0LzExLzA4LTE2OjA5OjIwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjYuMyAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjQtMDctMzFUMTE6NDk6MjMtMDY6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4ZDNmZWFkMi1lNWI2LTQzNWItYTdiZi0zOWMxYjM5YWVhNjQiIHhtcE1NOkRvY3VtZW50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" alt="Impulsa Desarrollos" /></div>
+    <div class="brand-text">
+      <div class="k1">IMPULSA DESARROLLOS</div>
+      <div class="k2">Centro de Concientización en Ciberseguridad</div>
+    </div>
+  </div>
+  <div class="topbar-status">
+    <span class="topbar-user" id="topbar-user" style="display:none;"></span>
+    <span id="topbar-count">0 / 10 módulos completados</span>
+    <div class="rail" id="topbar-rail"></div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ===== INTRO ANIMADA ===== -->
+  <section id="screen-intro" class="active">
+    <div class="intro-wrap">
+      <div class="intro-logo-wrap"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAY4AAAC2CAYAAADOWmoIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE9GlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4xLWMwMDIgNzkuYTFjZDEyZjQxLCAyMDI0LzExLzA4LTE2OjA5OjIwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjYuMyAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjQtMDctMzFUMTE6NDk6MjMtMDY6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4ZDNmZWFkMi1lNWI2LTQzNWItYTdiZi0zOWMxYjM5YWVhNjQiIHhtcE1NOkRvY3VtZW50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" alt="Impulsa Desarrollos" /></div>
+
+      <div class="intro-stage">
+        <svg viewBox="0 0 220 220">
+          <circle class="intro-ring r1" cx="110" cy="110" r="95"></circle>
+          <circle class="intro-ring r2" cx="110" cy="110" r="80"></circle>
+
+          <path class="intro-circuit c1" d="M40,60 C70,90 70,90 100,118"></path>
+          <path class="intro-circuit c2" d="M180,60 C150,90 150,90 120,118"></path>
+          <path class="intro-circuit c3" d="M110,200 C110,170 110,170 110,140"></path>
+          <path class="intro-circuit c4" d="M30,140 C60,140 60,140 88,128"></path>
+
+          <circle class="intro-node n1" cx="40" cy="60" r="4"></circle>
+          <circle class="intro-node n2" cx="180" cy="60" r="4"></circle>
+          <circle class="intro-node n3" cx="110" cy="200" r="4"></circle>
+          <circle class="intro-node n4" cx="30" cy="140" r="4"></circle>
+
+          <circle class="intro-packet p1" cx="0" cy="0" r="3.4"></circle>
+          <circle class="intro-packet p2" cx="0" cy="0" r="3.4"></circle>
+          <circle class="intro-packet p3" cx="0" cy="0" r="3.4"></circle>
+
+          <g class="intro-shield">
+            <path d="M110 62 L150 76 L150 118 C150 148 132 166 110 176 C88 166 70 148 70 118 L70 76 Z"
+                  fill="#c9933f" stroke="#e9c184" stroke-width="2.5"></path>
+            <rect class="intro-lock-body" x="94" y="112" width="32" height="26" rx="4"></rect>
+            <path class="intro-lock-shackle" d="M99 112 L99 101 C99 92 121 92 121 101 L121 112"></path>
+            <circle class="intro-keyhole" cx="110" cy="123" r="3.6"></circle>
+            <rect class="intro-keyhole" x="108" y="123" width="4" height="9"></rect>
+          </g>
+        </svg>
+      </div>
+
+      <h1 class="intro-h1">Bienvenido al Centro de Concientización en Ciberseguridad</h1>
+      <p class="intro-sub">Un recorrido interactivo para reconocer riesgos reales del día a día en Impulsa Desarrollos: correos falsos, canales no oficiales, contraseñas débiles y más — para que protejamos juntos la información de la empresa y de nuestros clientes.</p>
+
+      <div class="intro-chips">
+        <span class="intro-chip">🎣 Phishing</span>
+        <span class="intro-chip">🔑 Contraseñas</span>
+        <span class="intro-chip">🔒 Información confidencial</span>
+        <span class="intro-chip">🎭 Ingeniería social</span>
+        <span class="intro-chip">📱 Redes sociales</span>
+      </div>
+
+      <div class="intro-meta">10 módulos interactivos · ~20 minutos · Incluye reto final</div>
+
+      <button id="btn-intro-start">Comenzar →</button>
+    </div>
+  </section>
+
+  <!-- ===== REGISTRO ===== -->
+  <section id="screen-register">
+    <div class="register-wrap">
+      <h1>Antes de comenzar</h1>
+      <p class="reg-sub">Completa tus datos para identificar tu progreso. Tu reporte final se compartirá con el equipo de TI de Impulsa Desarrollos para dar seguimiento a la capacitación.</p>
+
+      <div class="reg-field">
+        <label for="reg-name">Nombre completo</label>
+        <input type="text" id="reg-name" placeholder="Ej. María López" autocomplete="name" />
+        <div class="reg-error" id="reg-name-error">Escribe tu nombre completo.</div>
+      </div>
+
+      <div class="reg-field">
+        <label for="reg-email">Correo institucional</label>
+        <input type="email" id="reg-email" placeholder="nombre@impulsa.com.gt" autocomplete="email" />
+        <div class="reg-error" id="reg-email-error">Escribe un correo válido.</div>
+      </div>
+
+      <div class="reg-field">
+        <label for="reg-dept">Departamento</label>
+        <select id="reg-dept">
+          <option value="" selected disabled>Selecciona tu departamento</option>
+          <option>Dirección General</option>
+          <option>Proyectos / Project Management</option>
+          <option>Construcción / Operaciones</option>
+          <option>Finanzas</option>
+          <option>Administración</option>
+          <option>Legal</option>
+          <option>Ventas y Marketing</option>
+          <option>Recursos Humanos</option>
+          <option>TI</option>
+          <option>Otro</option>
+        </select>
+        <div class="reg-error" id="reg-dept-error">Selecciona tu departamento.</div>
+      </div>
+
+      <p class="reg-privacy">🔒 Tus datos y resultados se usan únicamente para dar seguimiento interno a esta capacitación de ciberseguridad.</p>
+
+      <button id="btn-register-continue">Continuar →</button>
+    </div>
+  </section>
+
+  <!-- ===== DASHBOARD ===== -->
+  <section id="screen-dashboard">
+    <div class="hero-banner">
+      <div class="hero-left">
+        <div class="hero-logo"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAY4AAAC2CAYAAADOWmoIAAAACXBIWXMAAAsTAAALEwEAmpwYAAAE9GlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgOS4xLWMwMDIgNzkuYTFjZDEyZjQxLCAyMDI0LzExLzA4LTE2OjA5OjIwICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjYuMyAoTWFjaW50b3NoKSIgeG1wOkNyZWF0ZURhdGU9IjIwMjQtMDctMzFUMTE6NDk6MjMtMDY6MDAiIHhtcDpNb2RpZnlEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiB4bXA6TWV0YWRhdGFEYXRlPSIyMDI1LTAyLTE0VDEwOjUyOjI0LTA2OjAwIiBkYzpmb3JtYXQ9ImltYWdlL3BuZyIgcGhvdG9zaG9wOkNvbG9yTW9kZT0iMyIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo4ZDNmZWFkMi1lNWI2LTQzNWItYTdiZi0zOWMxYjM5YWVhNjQiIHhtcE1NOkRvY3VtZW50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" alt="Impulsa Desarrollos" /></div>
+      </div>
+      <div class="hero-art">
+        <svg viewBox="0 0 220 180">
+          <path d="M20,40 C50,70 50,70 80,95" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none"></path>
+          <path d="M200,40 C170,70 170,70 140,95" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none"></path>
+          <path d="M110,160 C110,130 110,130 110,105" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="none"></path>
+          <circle cx="20" cy="40" r="3" fill="rgba(255,255,255,0.4)"></circle>
+          <circle cx="200" cy="40" r="3" fill="rgba(255,255,255,0.4)"></circle>
+          <circle cx="110" cy="160" r="3" fill="rgba(255,255,255,0.4)"></circle>
+          <path d="M110 40 L145 53 L145 92 C145 118 130 134 110 143 C90 134 75 118 75 92 L75 53 Z"
+                fill="#c9933f" stroke="#e9c184" stroke-width="2"></path>
+          <rect x="96" y="88" width="28" height="22" rx="3" fill="#123039"></rect>
+          <path d="M100 88 L100 78 C100 70 120 70 120 78 L120 88" stroke="#123039" stroke-width="5" fill="none"></path>
+          <circle cx="110" cy="97" r="3" fill="#e9c184"></circle>
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="page-title">Panel de módulos</h1>
+    <p class="lede">Diez módulos cortos e interactivos sobre phishing, canales oficiales, contraseñas, información confidencial, uso seguro de IA, ingeniería social, redes sociales, dispositivos, navegación segura y reporte de incidentes. Complétalos todos para desbloquear tu reporte y el reto final.</p>
+
+    <p class="section-label">Módulos</p>
+    <div id="module-grid"></div>
+  </section>
+
+  <!-- ===== MODULE ===== -->
+  <section id="screen-module">
+    <button class="back-btn" id="btn-back-dashboard">← Volver al panel</button>
+    <div id="module-active-body">
+      <div class="mod-head">
+        <span id="mod-icon"></span>
+        <span id="mod-title"></span>
+      </div>
+      <p id="mod-sub"></p>
+      <div id="dots-row"></div>
+      <div class="qa-card">
+        <div id="scenario-container"></div>
+        <p id="question-text"></p>
+        <div id="options-container"></div>
+        <div id="feedback-box"></div>
+        <div class="qa-footer"><button id="btn-next">Siguiente →</button></div>
+      </div>
+    </div>
+    <div id="module-complete-body" style="display:none;">
+      <div class="mc-emoji">✅</div>
+      <div id="mc-score"></div>
+      <div id="mc-label"></div>
+      <button class="btn-primary" id="btn-back-dashboard-2">Volver al panel</button>
+    </div>
+  </section>
+
+  <!-- ===== REPORT ===== -->
+  <section id="screen-report">
+    <button class="back-btn" id="btn-back-dashboard-3">← Volver al panel</button>
+    <div class="report-stat">
+      <div id="report-pct">0%</div>
+      <div id="report-tag"></div>
+      <div id="report-person" style="font-size:12.5px; color:var(--text-dim); margin-top:6px;"></div>
+    </div>
+    <p id="report-desc"></p>
+    <p class="section-label">Resultado por módulo</p>
+    <div id="module-rows"></div>
+    <div class="results-actions">
+      <button class="btn-secondary" id="btn-review-toggle">Ver revisión completa</button>
+      <button class="btn-secondary" id="btn-retry-all">Reiniciar todo</button>
+    </div>
+    <div class="report-send-status" id="report-send-status"></div>
+    <p class="section-label" id="review-label" style="display:none; margin-top:22px;">Revisión de respuestas</p>
+    <div id="review-list"></div>
+  </section>
+
+  <!-- ===== GAME ===== -->
+  <section id="screen-game">
+    <button class="back-btn" id="btn-back-dashboard-4">← Volver al panel</button>
+    <h1 class="page-title">🎮 Reto final: ¿Riesgo o seguro?</h1>
+    <p class="lede">Tienes 45 segundos para clasificar la mayor cantidad de situaciones posible. Presiona "🚩 Es un riesgo" o "✅ Es seguro" lo más rápido y preciso que puedas.</p>
+
+    <div id="game-intro-body">
+      <button class="btn-primary" id="btn-game-start">Empezar reto →</button>
+    </div>
+
+    <div id="game-active-body" style="display:none;">
+      <div class="game-top">
+        <span class="game-score">Puntaje: <span id="game-score-num">0</span></span>
+        <div class="game-timer-track"><div class="game-timer-fill" id="game-timer-fill"></div></div>
+        <span id="game-time-num">45s</span>
+      </div>
+      <div class="game-card" id="game-card"><span id="game-item-text"></span></div>
+      <div class="game-choices">
+        <button class="game-choice-btn risk" id="btn-game-risk">🚩 Es un riesgo</button>
+        <button class="game-choice-btn safe" id="btn-game-safe">✅ Es seguro</button>
+      </div>
+    </div>
+
+    <div id="game-end-body" style="display:none;">
+      <div class="qa-card game-end">
+        <div class="ge-score" id="ge-score">0</div>
+        <div class="ge-rank" id="ge-rank"></div>
+        <div class="ge-desc" id="ge-desc"></div>
+        <div class="results-actions" style="justify-content:center;">
+          <button class="btn-primary" id="btn-game-again">Jugar de nuevo</button>
+          <button class="btn-secondary" id="btn-back-dashboard-5">Volver al panel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="credits">Impulsa Desarrollos · Material interno de concientización en ciberseguridad</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const MODULES = [
+    { key: "phishing", title: "Phishing y correos falsos", icon: "🎣", blurb: "Reconoce correos fraudulentos y aprende a reaccionar." },
+    { key: "whatsapp", title: "WhatsApp y canales oficiales", icon: "💬", blurb: "Por qué Teams es el canal oficial, no WhatsApp." },
+    { key: "passwords", title: "Contraseñas y autenticación", icon: "🔑", blurb: "MFA, Microsoft Authenticator y buenas prácticas." },
+    { key: "confidential", title: "Correo institucional e información confidencial", icon: "🔒", blurb: "Cómo cuidar los datos de la empresa y de clientes." },
+    { key: "ai", title: "Uso seguro de IA", icon: "🤖", blurb: "Qué evitar al usar herramientas de inteligencia artificial." },
+    { key: "socialeng", title: "Ingeniería social", icon: "🎭", blurb: "Manipulación, urgencia y falsas identidades." },
+    { key: "socialmedia", title: "Redes sociales", icon: "📱", blurb: "Qué compartir y qué no sobre tu trabajo." },
+    { key: "devices", title: "Dispositivos y redes", icon: "📶", blurb: "WiFi público, bloqueo de pantalla y equipos perdidos." },
+    { key: "browsing", title: "Navegación segura", icon: "🌐", blurb: "Enlaces, descargas y sitios web confiables." },
+    { key: "incident", title: "Reporte de incidentes", icon: "🚨", blurb: "Qué hacer -y a quién avisar- si algo salió mal." }
+  ];
+
+  const QUESTIONS = {
+  "phishing": [
+    {
+      "type": "phishing",
+      "email": {
+        "from": "soporte-office365@impulsa-mail.net",
+        "to": "tú",
+        "subject": "URGENTE: Verifica tu cuenta antes de 24 horas",
+        "body": "Estimado usuario,<br><br>Detectamos actividad inusual en su cuenta. Para evitar la suspensión, verifique sus datos de inmediato haciendo clic en el siguiente enlace:<br><br><span class=\"em-link\">http://office365-verify-impulsa.net/login</span><br><br>Equipo de Soporte"
+      },
+      "q": "¿Qué deberías hacer con este correo?",
+      "options": [
+        "Hacer clic en el enlace y verificar mis datos rápido para evitar problemas",
+        "No hacer clic, revisar el remitente real y reportarlo a IT sin responder",
+        "Reenviar el correo a un compañero para que él lo verifique primero",
+        "Responder al correo pidiendo más información"
+      ],
+      "correct": 1,
+      "explanation": "El dominio del remitente (impulsa-mail.net) no coincide con el dominio oficial de la empresa, y el mensaje usa urgencia para presionarte. Nunca hagas clic: verifica el remitente y repórtalo a IT."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Cuál de las siguientes es una señal típica de un correo de phishing?",
+      "options": [
+        "Remitente conocido con dominio institucional correcto",
+        "Urgencia excesiva, faltas de ortografía y enlaces que no coinciden con el dominio oficial",
+        "Firma completa con teléfono de la empresa",
+        "Formato idéntico al de comunicados anteriores"
+      ],
+      "correct": 1,
+      "explanation": "La urgencia artificial, errores de redacción y enlaces con dominios extraños son señales clásicas de phishing."
+    },
+    {
+      "type": "truefalse",
+      "q": "Si un correo parece venir de tu jefe pidiendo una transferencia o información urgente, es buena práctica confirmar la solicitud por otro canal (como Teams o llamada) antes de actuar.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "Este tipo de fraude se conoce como 'fraude del CEO'. Confirmar por un canal distinto al del mensaje original es la forma correcta de verificar identidad."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Por qué los atacantes suelen usar dominios que se parecen mucho al oficial (por ejemplo, impulsa-mail.net en vez del dominio real de la empresa)?",
+      "options": [
+        "Porque son más baratos de registrar",
+        "Porque Microsoft los obliga a usarlos",
+        "Para engañar a simple vista y que la víctima no note la diferencia",
+        "No tiene ninguna razón particular"
+      ],
+      "correct": 2,
+      "explanation": "Los dominios parecidos ('typosquatting') buscan que, a simple vista, el correo parezca legítimo. Siempre vale la pena revisar el dominio con cuidado."
+    },
+    {
+      "type": "phishing",
+      "email": {
+        "from": "pagos@proveedor-construccion.com",
+        "to": "tú",
+        "subject": "Cambio de cuenta bancaria para pagos",
+        "body": "Buen día,<br><br>Les escribo para informarles que cambiamos de banco. Por favor actualicen nuestra cuenta para el próximo pago a la siguiente cuenta:<br><br>Banco Nuevo · Cuenta 4455-8899<br><br>Gracias,<br>Departamento de Cobros"
+      },
+      "q": "Este correo dice venir de un proveedor habitual pidiendo cambiar la cuenta bancaria para el próximo pago. ¿Qué deberías hacer?",
+      "options": [
+        "Confirmar el cambio directamente con el proveedor por un canal ya conocido (teléfono registrado, no el del correo) antes de modificar cualquier dato",
+        "Actualizar el dato de inmediato para no atrasar el pago",
+        "Reenviar el correo a contabilidad sin decir nada más",
+        "Ignorar el correo sin verificar"
+      ],
+      "correct": 0,
+      "explanation": "El fraude de cambio de cuenta bancaria es muy común: siempre confirma este tipo de cambios por un canal distinto y ya conocido antes de mover cualquier pago."
+    }
+  ],
+  "whatsapp": [
+    {
+      "type": "chat",
+      "chat": {
+        "label": "WhatsApp · Número desconocido",
+        "messages": [
+          {
+            "from": "+502 5555-0000",
+            "me": false,
+            "text": "Hola, soy de RRHH. Necesito que me confirmes tu número de cuenta y una foto de tu DPI para actualizar la nómina, es urgente."
+          },
+          {
+            "from": "Tú",
+            "me": true,
+            "text": "¿Podrías confirmarlo por Teams?"
+          },
+          {
+            "from": "+502 5555-0000",
+            "me": false,
+            "text": "No hay tiempo, mándalo aquí mismo por favor."
+          }
+        ]
+      },
+      "q": "¿Cómo deberías responder a esta solicitud?",
+      "options": [
+        "Enviar la información porque dice ser de RRHH",
+        "No responder por WhatsApp; verificar la solicitud en Teams o directamente con RRHH por un canal oficial",
+        "Pedir que te llame para confirmar su identidad por un número desconocido",
+        "Reenviar tus datos por privado a un compañero para confirmar"
+      ],
+      "correct": 1,
+      "explanation": "WhatsApp no es un canal oficial de Impulsa Desarrollos. Cualquier solicitud de datos sensibles debe confirmarse por Teams o directamente con la persona responsable."
+    },
+    {
+      "type": "truefalse",
+      "q": "WhatsApp es un canal oficial aprobado por Impulsa Desarrollos para compartir documentos de trabajo, contraseñas o información de proyectos.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "El canal oficial de comunicación de la empresa es Microsoft Teams. WhatsApp no está aprobado para compartir información de trabajo."
+    },
+    {
+      "type": "mcq",
+      "q": "Un colega te pide por WhatsApp que le compartas el acceso a una carpeta de SharePoint de un proyecto confidencial. ¿Qué haces?",
+      "options": [
+        "Comparto el enlace de inmediato, es un compañero",
+        "Le mando usuario y contraseña por WhatsApp para que entre directo",
+        "Le indico que gestionaremos el acceso a través de Teams/SharePoint con los permisos correspondientes, no por WhatsApp",
+        "Ignoro el mensaje sin responder"
+      ],
+      "correct": 2,
+      "explanation": "Los accesos deben gestionarse dentro de Office 365, con permisos controlados, nunca compartiendo credenciales por canales no oficiales."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Cuál es la mejor manera de coordinar una reunión o el avance de un proyecto con tu equipo?",
+      "options": [
+        "Crear un grupo de WhatsApp para todo el proyecto",
+        "Usar WhatsApp porque es más rápido que Teams",
+        "Usar Teams para la coordinación oficial y dejar WhatsApp solo para temas personales",
+        "Usar el correo personal de todos"
+      ],
+      "correct": 2,
+      "explanation": "Teams es el canal oficial de Impulsa Desarrollos para coordinar el trabajo; mantiene todo registrado y dentro del entorno seguro de la empresa."
+    }
+  ],
+  "passwords": [
+    {
+      "type": "truefalse",
+      "q": "Activar la verificación en dos pasos (MFA) con Microsoft Authenticator añade una capa de seguridad aunque alguien descubra tu contraseña.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "El MFA exige un segundo factor (como la app Authenticator) además de la contraseña, por lo que conocerla ya no es suficiente para entrar."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Cuál es la práctica más segura para manejar tus contraseñas de trabajo?",
+      "options": [
+        "Usar contraseñas únicas y robustas por servicio, y activar MFA con Microsoft Authenticator",
+        "Usar la misma contraseña en todas las plataformas para no olvidarla",
+        "Guardar las contraseñas recordadas en el navegador de una computadora compartida",
+        "Compartir la contraseña con un compañero de confianza por si acaso"
+      ],
+      "correct": 0,
+      "explanation": "Contraseñas únicas y fuertes, más autenticación multifactor, reducen drásticamente el riesgo si una contraseña se filtra."
+    },
+    {
+      "type": "mcq",
+      "q": "Estás usando una computadora compartida o de un cliente para revisar tu correo institucional rápidamente. ¿Qué deberías hacer?",
+      "options": [
+        "Iniciar sesión, revisar lo necesario y cerrar sesión por completo al terminar, sin guardar la contraseña",
+        "Marcar \"recordar contraseña\" para no tener que escribirla de nuevo",
+        "Dejar la sesión abierta por si necesitas volver más tarde",
+        "Anotar la contraseña en un papel cerca del equipo"
+      ],
+      "correct": 0,
+      "explanation": "En equipos que no son tuyos nunca debes guardar contraseñas ni dejar sesiones abiertas: cierra sesión siempre al terminar."
+    },
+    {
+      "type": "truefalse",
+      "q": "Una contraseña corta con símbolos que olvidas seguido, y que por eso terminas anotando en un papel junto a tu computadora, es más segura que una frase larga y fácil de recordar.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "Una contraseña que olvidas y anotas en papel es un riesgo mayor que una frase larga que puedes recordar sin escribirla. Lo importante es que sea larga, única y que no tengas que anotarla."
+    },
+    {
+      "type": "mcq",
+      "q": "Recibes una notificación de Microsoft Authenticator pidiendo aprobar un inicio de sesión que tú no intentaste hacer. ¿Qué haces?",
+      "options": [
+        "Rechazarla, cambiar tu contraseña de inmediato y avisar a IT",
+        "Aprobarla de inmediato, tal vez fue un error tuyo",
+        "Ignorarla, seguramente no pasa nada",
+        "Aprobarla y luego preguntar a IT si era necesario"
+      ],
+      "correct": 0,
+      "explanation": "Una solicitud de MFA que no reconoces es una señal de que alguien más tiene tu contraseña. Recházala, cambia tu contraseña y avisa a IT de inmediato."
+    }
+  ],
+  "confidential": [
+    {
+      "type": "mcq",
+      "q": "¿Cuál es la forma correcta de compartir un documento confidencial de un proyecto con un compañero?",
+      "options": [
+        "Adjuntarlo en un correo personal (Gmail/Hotmail) para que sea más rápido",
+        "Compartirlo desde SharePoint/OneDrive con permisos específicos para esa persona",
+        "Subirlo a un grupo de WhatsApp del proyecto",
+        "Imprimirlo y dejarlo en un escritorio compartido"
+      ],
+      "correct": 1,
+      "explanation": "SharePoint y OneDrive permiten compartir con control de permisos, manteniendo la información dentro del entorno seguro de la empresa."
+    },
+    {
+      "type": "truefalse",
+      "q": "Está permitido reenviar correos del trabajo a tu cuenta de correo personal para poder revisarlos más cómodamente desde casa.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "El correo institucional nunca debe ligarse ni reenviarse a cuentas personales: esto saca información de la empresa de un entorno controlado."
+    },
+    {
+      "type": "mcq",
+      "q": "Terminaste tu jornada en la oficina de un cliente y dejaste tu sesión de correo abierta en una computadora que no es tuya. ¿Cuál es el riesgo principal?",
+      "options": [
+        "Ninguno, si confías en el cliente",
+        "Que se te acabe la batería",
+        "Que el correo se sincronice más lento",
+        "Que alguien acceda a información confidencial de proyectos, contratos o datos personales sin tu autorización"
+      ],
+      "correct": 3,
+      "explanation": "Dejar una sesión abierta en un equipo ajeno expone toda la información confidencial a la que tienes acceso."
+    },
+    {
+      "type": "mcq",
+      "q": "Un cliente te pide por correo que le envíes el estado de cuenta completo de otro cliente \"solo para comparar\". ¿Qué haces?",
+      "options": [
+        "Se lo envío, es solo para comparar",
+        "Le explico que no puedo compartir información de otros clientes y remito la solicitud al área correspondiente",
+        "Le pido que lo solicite directamente al otro cliente",
+        "Se lo envío, pero sin los montos"
+      ],
+      "correct": 1,
+      "explanation": "La información de un cliente nunca debe compartirse con otro cliente ni con terceros, sin importar el motivo. Esas solicitudes se remiten al área correspondiente."
+    },
+    {
+      "type": "truefalse",
+      "q": "Los documentos confidenciales de un proyecto (planos, contratos, estados financieros) deben guardarse únicamente en las carpetas de SharePoint/OneDrive designadas para ese proyecto, con los permisos correspondientes.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "Mantener los documentos en el lugar designado, con permisos controlados, es la forma correcta de proteger la información confidencial de cada proyecto."
+    }
+  ],
+  "ai": [
+    {
+      "type": "mcq",
+      "q": "Vas a usar una herramienta de inteligencia artificial (como ChatGPT u otra) para redactar un resumen de un contrato de un proyecto. ¿Qué deberías evitar?",
+      "options": [
+        "Pedirle que mejore la redacción de un texto genérico",
+        "Usar la IA para generar ideas de estructura",
+        "Subir el contrato completo con nombres, montos y datos de clientes a una IA pública sin autorización",
+        "Revisar el resultado antes de usarlo"
+      ],
+      "correct": 2,
+      "explanation": "Subir documentos con datos sensibles de clientes o de la empresa a herramientas de IA públicas expone esa información fuera de nuestro control."
+    },
+    {
+      "type": "truefalse",
+      "q": "Si necesitas ayuda de una IA pública para resumir un contrato, puedes subir el documento completo con nombres, montos y datos de clientes sin problema, siempre que luego elimines el archivo.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "La información que subes a herramientas de IA públicas puede quedar almacenada o usarse para entrenar esos sistemas, sin importar si luego borras el archivo original. Nunca subas datos confidenciales de clientes o de la empresa."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Cuál es una buena práctica al usar IA para tareas de trabajo?",
+      "options": [
+        "Confiar completamente en cualquier respuesta sin revisar",
+        "Subir bases de datos de clientes para que la IA las analice",
+        "Compartir credenciales con la IA para automatizar tareas",
+        "Verificar siempre la información que la IA genera antes de usarla, sin subir datos sensibles"
+      ],
+      "correct": 3,
+      "explanation": "La IA es una herramienta de apoyo: su resultado debe revisarse, y jamás debe alimentarse con información confidencial o credenciales."
+    },
+    {
+      "type": "mcq",
+      "q": "Tu compañero te dice que pegó la base de datos de contactos de clientes en una IA gratuita para que le ayude a redactar correos personalizados. ¿Qué deberías hacer?",
+      "options": [
+        "Nada, es una forma eficiente de trabajar",
+        "Pedirle que comparta el mismo prompt contigo",
+        "Comentarle el riesgo y reportarlo si es necesario, ya que expuso datos personales de clientes sin autorización",
+        "Ignorarlo porque no es tu responsabilidad"
+      ],
+      "correct": 2,
+      "explanation": "Subir datos personales de clientes a una IA pública sin autorización es una exposición de información que debe corregirse y, de ser necesario, reportarse."
+    }
+  ],
+  "socialeng": [
+    {
+      "type": "mcq",
+      "q": "Alguien te llama diciendo ser de \"soporte técnico de Microsoft\" y te pide que le des acceso remoto a tu computadora para \"solucionar un problema urgente\". ¿Qué haces?",
+      "options": [
+        "Cuelgo y verifico con el equipo de IT interno de Impulsa si la solicitud es real",
+        "Le doy acceso porque suena oficial",
+        "Le doy mi usuario y contraseña para que sea más rápido",
+        "Le pido que me llame en otro momento"
+      ],
+      "correct": 0,
+      "explanation": "Microsoft no llama a usuarios individuales para dar soporte no solicitado. Cualquier solicitud así debe verificarse con IT interno antes de dar acceso."
+    },
+    {
+      "type": "truefalse",
+      "q": "La ingeniería social se basa en manipular emociones como la urgencia, el miedo o la confianza para que la víctima baje la guardia, más que en fallas técnicas.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "La ingeniería social ataca a las personas, no a los sistemas: usa presión emocional para lograr que alguien actúe sin pensarlo dos veces."
+    },
+    {
+      "type": "mcq",
+      "q": "Un desconocido se presenta en la oficina diciendo que viene a \"revisar el internet\" y pide que lo dejes pasar a un área restringida sin identificación. ¿Qué es lo correcto?",
+      "options": [
+        "Pedirle identificación oficial y confirmar con recepción o el responsable antes de dar acceso",
+        "Dejarlo pasar, seguro está diciendo la verdad",
+        "Ignorarlo",
+        "Acompañarlo sin preguntar nada"
+      ],
+      "correct": 0,
+      "explanation": "El acceso físico a áreas restringidas siempre debe verificarse con identificación y confirmación previa, nunca por confianza automática."
+    },
+    {
+      "type": "truefalse",
+      "q": "La información que compartes en tus redes sociales personales no puede ser usada por un atacante para ganarse tu confianza, porque son cuentas totalmente separadas del trabajo.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "Un atacante puede investigar tus redes sociales para conocer datos personales (tu jefe, un proyecto reciente, etc.) y usarlos para sonar creíble y ganarse tu confianza más fácilmente."
+    }
+  ],
+  "socialmedia": [
+    {
+      "type": "mcq",
+      "q": "¿Qué tipo de información sobre proyectos de Impulsa Desarrollos es seguro publicar en tus redes sociales personales?",
+      "options": [
+        "Fotos de planos, contratos o información financiera de un proyecto en curso",
+        "Solo lo que la empresa haya aprobado o publicado oficialmente para comunicación externa",
+        "Cualquier cosa, mientras no menciones el nombre del cliente",
+        "Ubicaciones exactas de obras antes del lanzamiento oficial"
+      ],
+      "correct": 1,
+      "explanation": "En redes sociales personales solo debe compartirse información que la empresa ya haya hecho pública oficialmente."
+    },
+    {
+      "type": "truefalse",
+      "q": "Aceptar solicitudes de conexión de perfiles desconocidos que dicen ser \"reclutadores\" o \"inversionistas\" sin verificar quiénes son puede exponerte a intentos de ingeniería social.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "Perfiles falsos en redes profesionales son una táctica común para obtener información interna o acceso a las empresas."
+    },
+    {
+      "type": "mcq",
+      "q": "Recibes un mensaje por LinkedIn de alguien que dice representar a un inversionista importante y te pide información interna de un proyecto \"para evaluar una posible inversión\". ¿Qué haces?",
+      "options": [
+        "Remito la solicitud a mi jefe o al área correspondiente para que se maneje por los canales oficiales de la empresa",
+        "Le envío la información porque suena como una gran oportunidad",
+        "Le pido su información personal a cambio",
+        "Ignoro el mensaje sin decir nada a nadie"
+      ],
+      "correct": 0,
+      "explanation": "Cualquier solicitud de información interna, aunque parezca una oportunidad de negocio, debe canalizarse a través de los responsables correspondientes."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Qué deberías revisar antes de compartir información con un grupo o contacto de \"oportunidades de inversión inmobiliaria\" que llegó por redes sociales?",
+      "options": [
+        "Nada, todas las oportunidades son reales",
+        "Compartir de inmediato datos de proyectos para no perder la oportunidad",
+        "Aceptar y ya, luego se revisa",
+        "Verificar quién organiza, si tiene relación reconocida con la empresa, y no compartir información interna sin autorización"
+      ],
+      "correct": 3,
+      "explanation": "Antes de compartir cualquier información interna por una oferta que llega por redes sociales, hay que verificar la fuente y consultar con el área correspondiente."
+    }
+  ],
+  "devices": [
+    {
+      "type": "mcq",
+      "q": "Estás en un café y necesitas revisar un documento de trabajo confidencial. ¿Qué deberías tener en cuenta antes de conectarte al WiFi público?",
+      "options": [
+        "Conectarte sin problema, todas las redes públicas son seguras",
+        "Compartir la contraseña del WiFi público con tus compañeros",
+        "Desactivar el antivirus para que cargue más rápido",
+        "Evitar acceder a información confidencial en redes públicas sin protección y verificar que el sitio use HTTPS"
+      ],
+      "correct": 3,
+      "explanation": "Las redes WiFi públicas no son seguras por defecto; evita acceder a información sensible en ellas sin protección adicional."
+    },
+    {
+      "type": "truefalse",
+      "q": "Está bien dejar tu laptop o celular de trabajo desbloqueado y sin supervisión en un espacio público, siempre que sea \"solo un momento\".",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "Un dispositivo desbloqueado sin supervisión, aunque sea por segundos, puede ser usado para copiar información o instalar software malicioso. Nunca lo dejes sin protección, ni por un momento."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Qué deberías hacer si tu celular o laptop de trabajo se pierde o te lo roban?",
+      "options": [
+        "Esperar unos días para ver si aparece antes de decir algo",
+        "Reportarlo de inmediato a IT para bloquear accesos y proteger la información",
+        "Comprar uno nuevo y no mencionarlo",
+        "Solo cambiar tu contraseña personal de redes sociales"
+      ],
+      "correct": 1,
+      "explanation": "Reportar de inmediato permite a IT bloquear accesos y proteger la información de la empresa antes de que alguien más la use."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Por qué es importante mantener actualizado el sistema operativo y las apps de tu equipo de trabajo?",
+      "options": [
+        "Las actualizaciones suelen corregir fallas de seguridad que podrían ser aprovechadas por atacantes",
+        "Para que se vea más moderno",
+        "No es importante si el equipo funciona bien",
+        "Solo importa en computadoras, no en celulares"
+      ],
+      "correct": 0,
+      "explanation": "Las actualizaciones frecuentemente corrigen vulnerabilidades de seguridad; mantener tus dispositivos actualizados reduce el riesgo de ataques."
+    }
+  ],
+  "browsing": [
+    {
+      "type": "mcq",
+      "q": "Vas a descargar un archivo desde un enlace que llegó por correo de un remitente que no reconoces. ¿Qué es lo correcto?",
+      "options": [
+        "Descargarlo, seguro es seguro si el correo se ve profesional",
+        "Descargarlo y luego preguntar",
+        "Reenviarlo a todo el equipo para que ellos decidan",
+        "No descargarlo; verificar la fuente y, si hay duda, consultar con IT antes de abrir cualquier archivo"
+      ],
+      "correct": 3,
+      "explanation": "Los archivos de remitentes desconocidos pueden contener software malicioso; siempre verifica antes de abrir o descargar."
+    },
+    {
+      "type": "truefalse",
+      "q": "Un candado en la barra de direcciones (HTTPS) garantiza que un sitio web es 100% seguro y confiable.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "HTTPS solo indica que la conexión está cifrada, no que el sitio sea legítimo. Sitios falsos también pueden usar HTTPS."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Cuál es una buena práctica al navegar en sitios web relacionados con el trabajo?",
+      "options": [
+        "Ingresar tus credenciales de Office 365 en cualquier formulario que las pida",
+        "Instalar cualquier extensión de navegador sin revisar su origen",
+        "Verificar que la URL sea la oficial antes de ingresar credenciales, evitar clics en pop-ups sospechosos",
+        "Desactivar las actualizaciones del navegador"
+      ],
+      "correct": 2,
+      "explanation": "Verificar siempre la URL oficial y desconfiar de ventanas emergentes o formularios inesperados reduce el riesgo de robo de credenciales."
+    },
+    {
+      "type": "truefalse",
+      "q": "Instalar extensiones de navegador de fuentes desconocidas puede exponer tu información y la de la empresa, aunque la extensión parezca útil.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "Muchas extensiones maliciosas se disfrazan de herramientas útiles para obtener acceso a tu navegación, contraseñas guardadas o datos sensibles."
+    }
+  ],
+  "incident": [
+    {
+      "type": "mcq",
+      "q": "Hiciste clic accidentalmente en un enlace de un correo sospechoso e ingresaste tu contraseña. ¿Qué debes hacer de inmediato?",
+      "options": [
+        "No decir nada para evitar problemas",
+        "Esperar a ver si pasa algo raro",
+        "Solo comentarlo informalmente con un compañero",
+        "Reportarlo de inmediato a IT y cambiar tu contraseña lo antes posible"
+      ],
+      "correct": 3,
+      "explanation": "Actuar rápido —reportar y cambiar la contraseña— reduce el tiempo en que un atacante podría usar tus credenciales."
+    },
+    {
+      "type": "truefalse",
+      "q": "Reportar un incidente de seguridad rápidamente, aunque creas que fue un error tuyo, ayuda a que el equipo de IT pueda contener el problema a tiempo.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 0,
+      "explanation": "Reportar sin miedo es clave: mientras antes se sepa, más rápido se puede contener cualquier daño."
+    },
+    {
+      "type": "mcq",
+      "q": "¿Por qué canal se deben reportar los incidentes de seguridad en Impulsa Desarrollos?",
+      "options": [
+        "Por WhatsApp a un compañero cualquiera",
+        "Publicándolo en redes sociales",
+        "No es necesario reportarlo si ya se resolvió solo",
+        "Por el canal oficial establecido (Teams/IT) para que quede registrado y se pueda actuar rápido"
+      ],
+      "correct": 3,
+      "explanation": "Usar el canal oficial garantiza que el incidente quede registrado y que el equipo correcto pueda actuar de inmediato."
+    },
+    {
+      "type": "mcq",
+      "q": "Notas que un compañero comparte contraseñas o información confidencial por canales no oficiales de forma repetida. ¿Qué es lo correcto?",
+      "options": [
+        "No decir nada, no es asunto tuyo",
+        "Publicarlo en el grupo del equipo",
+        "Comentarlo con tu compañero y, si continúa, reportarlo a IT o a tu jefe directo para prevenir un incidente mayor",
+        "Ignorarlo hasta que pase algo grave"
+      ],
+      "correct": 2,
+      "explanation": "Prevenir es mejor que lamentar: hablar con tu compañero y, si el riesgo continúa, reportarlo, ayuda a evitar un incidente mayor."
+    },
+    {
+      "type": "truefalse",
+      "q": "Impulsa Desarrollos puede sancionar a alguien por reportar un incidente de seguridad, incluso si el reporte fue a tiempo.",
+      "options": [
+        "Verdadero",
+        "Falso"
+      ],
+      "correct": 1,
+      "explanation": "Reportar a tiempo nunca debe ser motivo de sanción: el objetivo es que todos reporten rápido para poder contener cualquier problema."
+    }
+  ]
+};
+
+  const GAME_ITEMS = [
+    { text: "Un correo urgente pide verificar tu cuenta haciendo clic en un enlace desconocido.", risk: true },
+    { text: "Activas MFA con Microsoft Authenticator en tu cuenta de Office 365.", risk: false },
+    { text: "Compartes un documento confidencial por WhatsApp para que sea más rápido.", risk: true },
+    { text: "Compartes un archivo desde SharePoint con permisos específicos para un compañero.", risk: false },
+    { text: "Dejas tu laptop desbloqueada en una cafetería mientras vas al baño.", risk: true },
+    { text: "Cierras sesión por completo después de usar una computadora compartida.", risk: false },
+    { text: "Subes un contrato con datos de clientes a una IA pública para que lo resuma.", risk: true },
+    { text: "Verificas el remitente de un correo antes de hacer clic en un enlace.", risk: false },
+    { text: "Le das acceso remoto a tu PC a alguien que llamó diciendo ser \"soporte técnico\".", risk: true },
+    { text: "Reportas de inmediato a IT que hiciste clic en un enlace sospechoso.", risk: false },
+    { text: "Usas la misma contraseña para tu correo del trabajo y tus redes sociales.", risk: true },
+    { text: "Confirmas por Teams una solicitud de transferencia que llegó por correo.", risk: false },
+    { text: "Publicas fotos de planos confidenciales de un proyecto en tus redes sociales.", risk: true },
+    { text: "Solo compartes en redes lo que la empresa ya publicó oficialmente.", risk: false },
+    { text: "Te conectas a un WiFi público para revisar documentos confidenciales sin protección.", risk: true },
+    { text: "Verificas la URL oficial antes de ingresar tus credenciales de Office 365.", risk: false },
+    { text: "Reenvías tu correo institucional a tu cuenta personal de Gmail.", risk: true },
+    { text: "Guardas los documentos del proyecto en OneDrive en vez de en tu escritorio.", risk: false },
+    { text: "Aceptas una solicitud de LinkedIn de un \"inversionista\" y le compartes datos internos.", risk: true },
+    { text: "Pides identificación oficial a un visitante antes de dejarlo pasar a un área restringida.", risk: false },
+    { text: "Ingresas tu contraseña en una ventana emergente inesperada mientras navegas.", risk: true },
+    { text: "Reportas la pérdida de tu celular de trabajo a IT de inmediato.", risk: false },
+    { text: "Dejas tu contraseña anotada en un papel junto a tu computadora.", risk: true },
+    { text: "Usas contraseñas distintas y robustas para cada servicio de trabajo.", risk: false },
+    { text: "Le das tu usuario y contraseña a un compañero \"solo por esta vez\".", risk: true }
+  ];
+
+  // ---- State ----
+  const progress = {};
+  MODULES.forEach(m => { progress[m.key] = { answers: [], done: false }; });
+  let activeModuleKey = null, activeIndex = 0, answeredCurrent = false;
+
+  function escapeHtml(s) {
+    const div = document.createElement("div");
+    div.textContent = s;
+    return div.innerHTML;
+  }
+
+  function moduleScore(key) {
+    const a = progress[key].answers;
+    if (!a.length) return 0;
+    const correct = a.filter(x => x.correct).length;
+    return Math.round((correct / a.length) * 100);
+  }
+
+  function completedCount() {
+    return MODULES.filter(m => progress[m.key].done).length;
+  }
+
+  function updateTopbar() {
+    const done = completedCount();
+    document.getElementById("topbar-count").textContent = done + " / " + MODULES.length + " módulos completados";
+    const rail = document.getElementById("topbar-rail");
+    rail.innerHTML = "";
+    MODULES.forEach(m => {
+      const seg = document.createElement("div");
+      seg.className = "seg" + (progress[m.key].done ? " done" : (progress[m.key].answers.length ? " started" : ""));
+      rail.appendChild(seg);
+    });
+  }
+
+  function renderDashboard() {
+    const grid = document.getElementById("module-grid");
+    grid.innerHTML = "";
+    MODULES.forEach((m, i) => {
+      const p = progress[m.key];
+      const card = document.createElement("div");
+      card.className = "module-card" + (p.done ? " done" : (p.answers.length ? " started" : ""));
+      let statusHtml;
+      if (p.done) statusHtml = "<div class=\"mc-status done\">Completado · " + moduleScore(m.key) + "%</div>";
+      else if (p.answers.length) statusHtml = "<div class=\"mc-status started\">En progreso</div>";
+      else statusHtml = "<div class=\"mc-status pending\">Sin comenzar</div>";
+      card.innerHTML =
+        "<div class=\"mc-icon\">" + m.icon + "</div>" +
+        "<div><div class=\"mc-num\">MÓDULO " + (i + 1) + "</div>" +
+        "<div class=\"mc-title\">" + m.title + "</div>" +
+        "<div class=\"mc-blurb\">" + m.blurb + "</div>" +
+        statusHtml + "</div>";
+      card.addEventListener("click", () => openModule(m.key));
+      grid.appendChild(card);
+    });
+
+    const doneCount = completedCount();
+    const reportTile = document.createElement("div");
+    reportTile.className = "report-tile " + (doneCount === MODULES.length ? "unlocked" : "locked");
+    if (doneCount === MODULES.length) {
+      reportTile.innerHTML = "<div><div class=\"rt-title\">📊 Ver mi reporte final</div><div class=\"rt-sub\">Revisa tu desempeño en los 10 módulos</div></div><div class=\"rt-arrow\">→</div>";
+      reportTile.addEventListener("click", openReport);
+    } else {
+      reportTile.innerHTML = "<div><div class=\"rt-title\">🔒 Reporte final</div><div class=\"rt-sub\">Completa los " + MODULES.length + " módulos para desbloquear (" + doneCount + "/" + MODULES.length + ")</div></div>";
+    }
+    grid.appendChild(reportTile);
+
+    const gameTile = document.createElement("div");
+    gameTile.className = "report-tile game-tile " + (doneCount === MODULES.length ? "unlocked" : "locked");
+    if (doneCount === MODULES.length) {
+      gameTile.innerHTML = "<div><div class=\"rt-title\">🎮 Reto final: ¿Riesgo o seguro?</div><div class=\"rt-sub\">Ponte a prueba contra el reloj</div></div><div class=\"rt-arrow\">→</div>";
+      gameTile.addEventListener("click", openGame);
+    } else {
+      gameTile.innerHTML = "<div><div class=\"rt-title\">🔒 Reto final: ¿Riesgo o seguro?</div><div class=\"rt-sub\">Completa los " + MODULES.length + " módulos para desbloquear</div></div>";
+    }
+    grid.appendChild(gameTile);
+
+    updateTopbar();
+  }
+
+  // ---- Registro del participante ----
+  const participant = { name: "", email: "", dept: "" };
+  let reportSubmitted = false;
+
+  // FormSubmit no requiere cuenta: envía los reportes directo a este correo.
+  // La PRIMERA vez que llegue un envío, FormSubmit manda un correo de confirmación
+  // a jlopez@impulsa.com.gt — hay que darle clic una sola vez para activarlo.
+  const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/jlopez@impulsa.com.gt";
+
+  function validateRegister() {
+    const name = document.getElementById("reg-name").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+    const dept = document.getElementById("reg-dept").value;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const nameOk = name.length >= 3;
+    const deptOk = !!dept;
+
+    document.getElementById("reg-name-error").style.display = nameOk ? "none" : "block";
+    document.getElementById("reg-email-error").style.display = emailOk ? "none" : "block";
+    document.getElementById("reg-dept-error").style.display = deptOk ? "none" : "block";
+
+    const ok = nameOk && emailOk && deptOk;
+    document.getElementById("btn-register-continue").disabled = !ok;
+    return { ok, name, email, dept };
+  }
+
+  ["reg-name", "reg-email", "reg-dept"].forEach(id => {
+    document.getElementById(id).addEventListener("input", validateRegister);
+    document.getElementById(id).addEventListener("change", validateRegister);
+  });
+  validateRegister();
+
+  document.getElementById("btn-register-continue").addEventListener("click", () => {
+    const { ok, name, email, dept } = validateRegister();
+    if (!ok) return;
+    participant.name = name;
+    participant.email = email;
+    participant.dept = dept;
+    const userTag = document.getElementById("topbar-user");
+    userTag.textContent = "👤 " + name.split(" ")[0] + " · " + dept;
+    userTag.style.display = "inline";
+    renderDashboard();
+    showScreen("dashboard");
+  });
+
+  function showScreen(name) {
+    const screenIntro = document.getElementById("screen-intro");
+    const screenRegister = document.getElementById("screen-register");
+    const screenDashboard = document.getElementById("screen-dashboard");
+    const screenModule = document.getElementById("screen-module");
+    const screenReport = document.getElementById("screen-report");
+    const screenGame = document.getElementById("screen-game");
+    screenIntro.style.display = name === "intro" ? "block" : "none";
+    screenRegister.style.display = name === "register" ? "block" : "none";
+    screenDashboard.style.display = name === "dashboard" ? "block" : "none";
+    screenModule.style.display = name === "module" ? "block" : "none";
+    screenReport.style.display = name === "report" ? "block" : "none";
+    screenGame.style.display = name === "game" ? "block" : "none";
+    window.scrollTo(0, 0);
+  }
+
+  function openModule(key) {
+    activeModuleKey = key;
+    activeIndex = 0;
+    document.getElementById("module-active-body").style.display = "block";
+    document.getElementById("module-complete-body").style.display = "none";
+    const m = MODULES.find(x => x.key === key);
+    document.getElementById("mod-icon").textContent = m.icon;
+    document.getElementById("mod-title").textContent = m.title;
+    document.getElementById("mod-sub").textContent = m.blurb;
+    showScreen("module");
+    renderModuleQuestion();
+  }
+
+  function renderDots() {
+    const total = QUESTIONS[activeModuleKey].length;
+    const row = document.getElementById("dots-row");
+    row.innerHTML = "";
+    const answers = progress[activeModuleKey].answers;
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement("div");
+      dot.className = "dot";
+      if (i < answers.length) dot.classList.add(answers[i].correct ? "correct" : "wrong");
+      else if (i === activeIndex) dot.classList.add("current");
+      row.appendChild(dot);
+    }
+  }
+
+  function renderModuleQuestion() {
+    answeredCurrent = false;
+    const qs = QUESTIONS[activeModuleKey];
+    const q = qs[activeIndex];
+    renderDots();
+
+    const scenario = document.getElementById("scenario-container");
+    scenario.innerHTML = "";
+    if (q.type === "phishing" && q.email) {
+      scenario.innerHTML =
+        "<div class=\"email-mock\"><div class=\"em-head\">" +
+        "<div class=\"em-row\"><b>De:</b> " + escapeHtml(q.email.from) + "</div>" +
+        "<div class=\"em-row\"><b>Para:</b> " + escapeHtml(q.email.to) + "</div>" +
+        "<div class=\"em-row\"><b>Asunto:</b> " + escapeHtml(q.email.subject) + "</div>" +
+        "</div><div class=\"em-body\">" + q.email.body + "</div></div>";
+    } else if (q.type === "chat" && q.chat) {
+      let bubbles = "";
+      q.chat.messages.forEach(msg => {
+        bubbles += "<div class=\"chat-bubble " + (msg.me ? "me" : "them") + "\">" + escapeHtml(msg.text) + "</div>";
+      });
+      scenario.innerHTML = "<div class=\"chat-mock\"><div class=\"cm-label\">" + escapeHtml(q.chat.label) + "</div><div class=\"cm-body\">" + bubbles + "</div></div>";
+    }
+
+    document.getElementById("question-text").textContent = q.q;
+    const optionsContainer = document.getElementById("options-container");
+    optionsContainer.innerHTML = "";
+    q.options.forEach((opt, idx) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt;
+      btn.addEventListener("click", () => selectOption(idx));
+      optionsContainer.appendChild(btn);
+    });
+
+    const fb = document.getElementById("feedback-box");
+    fb.style.display = "none";
+    fb.className = "";
+    document.getElementById("btn-next").style.display = "none";
+  }
+
+  function lockOptions() {
+    document.querySelectorAll("#options-container .option-btn").forEach(b => b.setAttribute("disabled", "true"));
+  }
+
+  function showFeedback(isCorrect, explanation) {
+    const fb = document.getElementById("feedback-box");
+    fb.style.display = "block";
+    fb.className = isCorrect ? "ok" : "bad";
+    fb.textContent = (isCorrect ? "✅ ¡Correcto! " : "❌ No es la respuesta correcta. ") + explanation;
+    const nextBtn = document.getElementById("btn-next");
+    nextBtn.style.display = "inline-block";
+    const qs = QUESTIONS[activeModuleKey];
+    nextBtn.textContent = (activeIndex === qs.length - 1) ? "Ver resultado del módulo →" : "Siguiente →";
+  }
+
+  function selectOption(idx) {
+    if (answeredCurrent) return;
+    answeredCurrent = true;
+    const qs = QUESTIONS[activeModuleKey];
+    const q = qs[activeIndex];
+    const isCorrect = idx === q.correct;
+    progress[activeModuleKey].answers[activeIndex] = { selected: idx, correct: isCorrect };
+
+    const btns = document.querySelectorAll("#options-container .option-btn");
+    btns.forEach((b, i) => {
+      if (i === idx && isCorrect) b.classList.add("selected-correct");
+      if (i === idx && !isCorrect) b.classList.add("selected-wrong");
+      if (i === q.correct && !isCorrect) b.classList.add("reveal-correct");
+    });
+    lockOptions();
+    showFeedback(isCorrect, q.explanation);
+    renderDots();
+  }
+
+  document.getElementById("btn-next").addEventListener("click", () => {
+    const qs = QUESTIONS[activeModuleKey];
+    if (activeIndex < qs.length - 1) {
+      activeIndex++;
+      renderModuleQuestion();
+    } else {
+      finishModule();
+    }
+  });
+
+  function finishModule() {
+    progress[activeModuleKey].done = true;
+    document.getElementById("module-active-body").style.display = "none";
+    document.getElementById("module-complete-body").style.display = "block";
+    const score = moduleScore(activeModuleKey);
+    document.getElementById("mc-score").textContent = score + "%";
+    let label;
+    if (score >= 80) label = "¡Excelente dominio del tema!";
+    else if (score >= 50) label = "Buen intento, repasa los puntos clave.";
+    else label = "Vale la pena repasar este módulo con calma.";
+    document.getElementById("mc-label").textContent = label;
+    updateTopbar();
+  }
+
+  function backToDashboard() {
+    renderDashboard();
+    showScreen("dashboard");
+  }
+
+  document.getElementById("btn-back-dashboard").addEventListener("click", backToDashboard);
+  document.getElementById("btn-back-dashboard-2").addEventListener("click", backToDashboard);
+  document.getElementById("btn-back-dashboard-3").addEventListener("click", backToDashboard);
+
+  // ---- Report ----
+  function openReport() {
+    let totalCorrect = 0, totalQuestions = 0;
+    MODULES.forEach(m => {
+      const a = progress[m.key].answers;
+      totalQuestions += a.length;
+      totalCorrect += a.filter(x => x.correct).length;
+    });
+    const pct = totalQuestions ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+    document.getElementById("report-pct").textContent = pct + "%";
+    let tag, desc;
+    if (pct >= 85) { tag = "Nivel: Muy consciente"; desc = "Dominas los conceptos clave de ciberseguridad. Sigue aplicando estas prácticas en tu día a día."; }
+    else if (pct >= 60) { tag = "Nivel: En buen camino"; desc = "Tienes buenas bases, pero hay algunos temas que conviene reforzar. Revisa la sección de abajo."; }
+    else { tag = "Nivel: Necesita reforzar"; desc = "Es importante repasar varios de estos temas: pueden marcar la diferencia entre proteger o exponer información sensible."; }
+    document.getElementById("report-tag").textContent = tag;
+    document.getElementById("report-desc").textContent = desc;
+    document.getElementById("report-person").textContent = participant.name + " · " + participant.dept;
+
+    const rows = document.getElementById("module-rows");
+    rows.innerHTML = "";
+    MODULES.forEach(m => {
+      const score = moduleScore(m.key);
+      const row = document.createElement("div");
+      row.className = "mod-row";
+      row.innerHTML =
+        "<span class=\"mr-icon\">" + m.icon + "</span>" +
+        "<span class=\"mr-name\">" + m.title + "</span>" +
+        "<div class=\"mr-bar-track\"><div class=\"mr-bar-fill\" style=\"width:" + score + "%\"></div></div>" +
+        "<span class=\"mr-pct\">" + score + "%</span>";
+      rows.appendChild(row);
+    });
+
+    document.getElementById("review-list").style.display = "none";
+    document.getElementById("review-label").style.display = "none";
+    document.getElementById("btn-review-toggle").textContent = "Ver revisión completa";
+
+    showScreen("report");
+    sendReportOnce(pct, tag);
+  }
+
+  function buildReportSummaryText(pct, tag) {
+    let lines = [];
+    lines.push("Reporte de Ciberseguridad · Impulsa Desarrollos");
+    lines.push("Nombre: " + participant.name);
+    lines.push("Correo: " + participant.email);
+    lines.push("Departamento: " + participant.dept);
+    lines.push("Resultado general: " + pct + "% (" + tag.replace("Nivel: ", "") + ")");
+    lines.push("");
+    lines.push("Resultado por módulo:");
+    MODULES.forEach(m => { lines.push("- " + m.title + ": " + moduleScore(m.key) + "%"); });
+    lines.push("");
+    lines.push("Fecha: " + new Date().toLocaleString("es-GT"));
+    return lines.join("\n");
+  }
+
+  function showSendStatus(cls, html) {
+    const box = document.getElementById("report-send-status");
+    box.className = "report-send-status " + cls;
+    box.innerHTML = html;
+  }
+
+  function wireCopyFallback(pct, tag) {
+    const btn = document.getElementById("btn-copy-summary");
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const text = buildReportSummaryText(pct, tag);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = "✓ Copiado — pégalo en un correo o chat a TI";
+        }).catch(() => { window.prompt("Copia este resumen manualmente:", text); });
+      } else {
+        window.prompt("Copia este resumen manualmente:", text);
+      }
+    });
+  }
+
+  function sendReportOnce(pct, tag) {
+    if (reportSubmitted) return;
+    reportSubmitted = true;
+
+    showSendStatus("sending", "Enviando tu reporte…");
+
+    const payload = {
+      nombre: participant.name,
+      correo: participant.email,
+      departamento: participant.dept,
+      resultado_general: pct + "%",
+      nivel: tag,
+      fecha: new Date().toLocaleString("es-GT"),
+      detalle_por_modulo: MODULES.map(m => m.title + ": " + moduleScore(m.key) + "%").join(" | "),
+      _subject: "Reporte de ciberseguridad: " + participant.name + " (" + pct + "%)",
+      _template: "table",
+      _captcha: "false"
+    };
+
+    fetch(FORMSUBMIT_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(res => {
+      if (res.ok) {
+        showSendStatus("ok", "✅ Tu reporte se envió correctamente. ¡Gracias por completar la capacitación!");
+      } else {
+        throw new Error("send failed");
+      }
+    }).catch(() => {
+      showSendStatus("fail",
+        "⚠️ No se pudo enviar tu reporte automáticamente (puede ser por falta de conexión)." +
+        "<br>Por favor comparte tu resultado con TI:" +
+        "<br><button class=\"btn-secondary\" id=\"btn-copy-summary\">📋 Copiar resumen</button>");
+      wireCopyFallback(pct, tag);
+    });
+  }
+
+  document.getElementById("btn-review-toggle").addEventListener("click", () => {
+    const list = document.getElementById("review-list");
+    const label = document.getElementById("review-label");
+    const btn = document.getElementById("btn-review-toggle");
+    const isOpen = list.style.display === "flex";
+    if (isOpen) {
+      list.style.display = "none";
+      label.style.display = "none";
+      btn.textContent = "Ver revisión completa";
+      return;
+    }
+    list.innerHTML = "";
+    MODULES.forEach(m => {
+      const qs = QUESTIONS[m.key];
+      const answers = progress[m.key].answers;
+      qs.forEach((q, i) => {
+        const a = answers[i];
+        if (!a) return;
+        const item = document.createElement("div");
+        item.className = "review-item";
+        item.innerHTML =
+          "<div class=\"ri-mod\">" + m.icon + " " + m.title + "</div>" +
+          "<div class=\"ri-q\">" + escapeHtml(q.q) + "</div>" +
+          "<div class=\"ri-a " + (a.correct ? "correct" : "wrong") + "\">Tu respuesta: " + escapeHtml(q.options[a.selected]) + (a.correct ? " ✓" : " ✗") + "</div>" +
+          (a.correct ? "" : "<div class=\"ri-a correct\">Correcta: " + escapeHtml(q.options[q.correct]) + "</div>") +
+          "<div class=\"ri-exp\">" + escapeHtml(q.explanation) + "</div>";
+        list.appendChild(item);
+      });
+    });
+    list.style.display = "flex";
+    label.style.display = "block";
+    btn.textContent = "Ocultar revisión";
+  });
+
+  document.getElementById("btn-retry-all").addEventListener("click", () => {
+    MODULES.forEach(m => { progress[m.key] = { answers: [], done: false }; });
+    reportSubmitted = false;
+    updateTopbar();
+    backToDashboard();
+  });
+
+  // ---- Game ----
+  const gameIntroBody = document.getElementById("game-intro-body");
+  const gameActiveBody = document.getElementById("game-active-body");
+  const gameEndBody = document.getElementById("game-end-body");
+  const gameCard = document.getElementById("game-card");
+  const gameItemText = document.getElementById("game-item-text");
+  const gameScoreNum = document.getElementById("game-score-num");
+  const gameTimeNum = document.getElementById("game-time-num");
+  const gameTimerFill = document.getElementById("game-timer-fill");
+  const GAME_DURATION = 45;
+  let gameQueue = [], gameCurrentItem = null, gameScore = 0, gameTimeLeft = GAME_DURATION, gameTimerId = null, gameLocked = false;
+
+  function shuffledGameQueue() {
+    const arr = GAME_ITEMS.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = arr[i]; arr[i] = arr[j]; arr[j] = tmp;
+    }
+    return arr;
+  }
+
+  function openGame() {
+    gameIntroBody.style.display = "block";
+    gameActiveBody.style.display = "none";
+    gameEndBody.style.display = "none";
+    showScreen("game");
+  }
+
+  function stopGameTimer() {
+    if (gameTimerId) { clearInterval(gameTimerId); gameTimerId = null; }
+  }
+
+  function nextGameItem() {
+    if (gameQueue.length === 0) gameQueue = shuffledGameQueue();
+    gameCurrentItem = gameQueue.pop();
+    gameItemText.textContent = gameCurrentItem.text;
+    gameCard.className = "game-card";
+    gameLocked = false;
+  }
+
+  function startGame() {
+    gameScore = 0;
+    gameTimeLeft = GAME_DURATION;
+    gameScoreNum.textContent = "0";
+    gameTimeNum.textContent = GAME_DURATION + "s";
+    gameTimerFill.style.width = "100%";
+    gameTimerFill.classList.remove("low");
+    gameQueue = shuffledGameQueue();
+    gameIntroBody.style.display = "none";
+    gameEndBody.style.display = "none";
+    gameActiveBody.style.display = "block";
+    nextGameItem();
+    stopGameTimer();
+    gameTimerId = setInterval(() => {
+      gameTimeLeft--;
+      gameTimeNum.textContent = gameTimeLeft + "s";
+      const pct = Math.max(0, (gameTimeLeft / GAME_DURATION) * 100);
+      gameTimerFill.style.width = pct + "%";
+      if (gameTimeLeft <= 10) gameTimerFill.classList.add("low");
+      if (gameTimeLeft <= 0) endGame();
+    }, 1000);
+  }
+
+  function answerGame(userSaysRisk) {
+    if (gameLocked || !gameCurrentItem) return;
+    gameLocked = true;
+    const isCorrect = userSaysRisk === gameCurrentItem.risk;
+    gameScore += isCorrect ? 1 : -1;
+    gameScoreNum.textContent = String(gameScore);
+    gameCard.className = "game-card " + (isCorrect ? "flash-correct" : "flash-wrong");
+    setTimeout(() => { if (gameTimeLeft > 0) nextGameItem(); }, 350);
+  }
+
+  function endGame() {
+    stopGameTimer();
+    gameActiveBody.style.display = "none";
+    gameEndBody.style.display = "block";
+    document.getElementById("ge-score").textContent = String(gameScore);
+    let rank, desc;
+    if (gameScore >= 18) { rank = "🏆 Guardián de la información"; desc = "Excelente reflejo para detectar riesgos. Sigues las buenas prácticas casi por instinto."; }
+    else if (gameScore >= 10) { rank = "🛡️ Buen ojo"; desc = "Reconoces bien la mayoría de los riesgos. Repasa los módulos donde tuviste más dudas."; }
+    else if (gameScore >= 4) { rank = "🔎 Vas en camino"; desc = "Aún hay patrones de riesgo que se te escapan. Vale la pena repasar los módulos del panel."; }
+    else { rank = "⚠️ A reforzar"; desc = "Es un buen momento para repasar con calma los módulos: te ayudarán a identificar estos riesgos más rápido."; }
+    document.getElementById("ge-rank").textContent = rank;
+    document.getElementById("ge-desc").textContent = desc;
+  }
+
+  document.getElementById("btn-game-start").addEventListener("click", startGame);
+  document.getElementById("btn-game-again").addEventListener("click", startGame);
+  document.getElementById("btn-game-risk").addEventListener("click", () => answerGame(true));
+  document.getElementById("btn-game-safe").addEventListener("click", () => answerGame(false));
+  document.getElementById("btn-back-dashboard-4").addEventListener("click", () => { stopGameTimer(); backToDashboard(); });
+  document.getElementById("btn-back-dashboard-5").addEventListener("click", () => { stopGameTimer(); backToDashboard(); });
+
+  // ---- Intro ----
+  document.getElementById("btn-intro-start").addEventListener("click", () => {
+    showScreen("register");
+  });
+
+  // ---- Init ----
+  showScreen("intro");
+})();
+</script>
+</body>
+</html>
