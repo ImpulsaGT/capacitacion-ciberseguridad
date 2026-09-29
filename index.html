@@ -1851,19 +1851,28 @@
       _captcha: "false"
     };
 
+    // Si el servicio de envío no responde en 12s (colgado, caído, lento),
+    // no dejamos a la persona esperando indefinidamente: se trata como fallo
+    // y se muestra el resumen para copiar.
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
     fetch(FORMSUBMIT_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: controller.signal
     }).then(res => {
+      clearTimeout(timeoutId);
       if (res.ok) {
         showSendStatus("ok", "✅ Tu reporte se envió correctamente. ¡Gracias por completar este ejercicio de concientización!");
       } else {
         throw new Error("send failed");
       }
     }).catch(() => {
+      clearTimeout(timeoutId);
       showSendStatus("fail",
-        "⚠️ No se pudo enviar tu reporte automáticamente (puede ser por falta de conexión)." +
+        "⚠️ No se pudo enviar tu reporte automáticamente (puede ser por falta de conexión o que el servicio de envío no esté disponible en este momento)." +
         "<br>Por favor comparte tu resultado con TI:" +
         "<br><button class=\"btn-secondary\" id=\"btn-copy-summary\">📋 Copiar resumen</button>");
       wireCopyFallback(pct, tag);
